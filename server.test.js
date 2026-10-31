@@ -9,6 +9,6 @@ test('GET / returns the expected message', async () => {
     assert.equal(response.status, 200);
     assert.equal(
         response.text,
-        'Hello from Node.js running inside Kubernetes!'
+        'Hello from Node.js v2 running inside Kubernetes!'
     );
 });

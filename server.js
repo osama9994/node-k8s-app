@@ -1,11 +1,10 @@
-
 const express = require('express');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-    res.send('Hello from Node.js running inside Kubernetes!');
+    res.send('Hello from Node.js v2 running inside Kubernetes!');
 });
 
 if (require.main === module) {
@@ -15,4 +14,3 @@ if (require.main === module) {
 }
 
 module.exports = app;
-
