@@ -59,3 +59,38 @@ jobs:
             osama4747/node-k8s-app:latest
             osama4747/node-k8s-app:sha-${{ github.sha }}
 
+  update-manifest:
+    name: Update Kubernetes Manifest
+    needs: docker
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Update Deployment Image
+        env:
+          IMAGE: osama4747/node-k8s-app:sha-${{ github.sha }}
+        run: |
+          sed -i "s|^\([[:space:]]*image: \).*|\1${IMAGE}|" deploy/deployment.yaml
+
+      - name: Commit and Push Manifest
+        env:
+          IMAGE_TAG: sha-${{ github.sha }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add deploy/deployment.yaml
+
+          if git diff --cached --quiet; then
+            echo "No manifest changes to commit"
+          else
+            git commit -m "chore: deploy image ${IMAGE_TAG}"
+            git push
+          fi
+
