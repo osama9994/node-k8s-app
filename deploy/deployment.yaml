@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: node-app
-        image: osama4747/node-k8s-app:sha-38607c3f11ef30133897f9f5feb4c414ab41772a
+        image: osama4747/node-k8s-app:sha-5abe23a9a8a48ba7a7297911614af84ea6db4e2a
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
